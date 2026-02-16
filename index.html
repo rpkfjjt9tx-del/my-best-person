@@ -6,8 +6,12 @@
     <title>For My Best Ever Person 💙</title>
     <style>
         :root { --blue: #0077b6; --light: #caf0f8; --dark: #03045e; --mid: #00b4d8; }
-        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--light); color: var(--dark); text-align: center; min-height: 100vh; }
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--light); color: var(--dark); text-align: center; min-height: 100vh; overflow-x: hidden; }
         
+        /* Floating Decorations */
+        .decor { position: fixed; font-size: 20px; z-index: -1; animation: float 6s infinite ease-in-out; opacity: 0.6; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+
         /* Lock Screen */
         #lock-screen { position: fixed; inset: 0; background: linear-gradient(135deg, var(--mid), var(--dark)); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; }
         input { padding: 15px; border-radius: 25px; border: none; margin: 15px; width: 220px; text-align: center; font-size: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
@@ -30,6 +34,12 @@
 </head>
 <body onload="startTimer()">
 
+    <div class="decor" style="top:10%; left:10%;">❤️</div>
+    <div class="decor" style="top:20%; right:15%;">🌸</div>
+    <div class="decor" style="bottom:15%; left:20%;">👫</div>
+    <div class="decor" style="bottom:10%; right:10%;">💐</div>
+    <div class="decor" style="top:50%; left:5%;">💙</div>
+
     <div id="music-container" style="display:none; position: fixed; bottom: 20px; right: 20px; z-index: 2000;">
         <iframe id="youtube-player" width="0" height="0" src="" frameborder="0" allow="autoplay"></iframe>
     </div>
@@ -43,15 +53,22 @@
 
     <div id="main-content" class="content-section">
         <h1>Our Journey 🌟</h1>
-        <div class="timer" id="countdown">Calculating our time...</div>
-        <p>I've known you since <b>July 10, 2021</b>.</p>
+        <div class="timer" id="countdown">Calculating...</div>
+        <p>Known you since <b>July 10, 2021</b> 👫</p>
         
         <div style="margin: 30px 0;">
             <p>Listen to this while you're here...</p>
             <button onclick="playMusic()" id="musicBtn">🎵 Play Music</button>
         </div>
+        <button onclick="showPage('q_fav')">Next ➡️</button>
+    </div>
 
-        <button onclick="showPage('q1')">Next ➡️</button>
+    <div id="q_fav" class="page content-section">
+        <h2>What is my favourite thing? 🎁</h2>
+        <p><i>Hint: Kids love this!</i></p>
+        <input type="text" id="ansFav" placeholder="Enter your answer...">
+        <button onclick="checkFav()">Submit</button>
+        <button class="back-btn" onclick="showPage('main-content')">⬅ Back</button>
     </div>
 
     <div id="q1" class="page content-section">
@@ -60,19 +77,19 @@
             <button onclick="saveAndNext('Do you love me?', 'Yes', 'q2')">Yes</button>
             <button onclick="saveAndNext('Do you love me?', 'No', 'q2')">No</button>
         </div>
-        <button class="back-btn" onclick="showPage('main-content')">⬅ Back</button>
+        <button class="back-btn" onclick="showPage('q_fav')">⬅ Back</button>
     </div>
 
     <div id="q2" class="page content-section">
         <h2>Did I ever hurt you? 🥺</h2>
-        <textarea id="ansHurt" placeholder="Be honest with me..."></textarea>
+        <textarea id="ansHurt" placeholder="Be honest..."></textarea>
         <button onclick="saveAndNext('Did I hurt you?', document.getElementById('ansHurt').value, 'q3')">Next</button>
         <button class="back-btn" onclick="showPage('q1')">⬅ Back</button>
     </div>
 
     <div id="q3" class="page content-section">
-        <h2>Is it okay if I leave you for your sake? 💔</h2>
-        <textarea id="ansLeave" placeholder="Tell me what you think..."></textarea>
+        <h2>Is it okay if I leave for your sake? 💔</h2>
+        <textarea id="ansLeave" placeholder="Tell me..."></textarea>
         <button onclick="saveAndNext('Is it okay if I leave?', document.getElementById('ansLeave').value, 'q4')">Next</button>
         <button class="back-btn" onclick="showPage('q2')">⬅ Back</button>
     </div>
@@ -86,9 +103,8 @@
 
     <div id="final" class="page content-section">
         <div class="message-box">
-            I just want you to be happy, whether it's <b>with me or without me</b>. My only wish is to see you happy always. 🌟<br><br>
-            I am so sorry for everything I did until now... I miss you more than words could ever explain 🥺💔 Every single day, there’s this quiet space in my heart that only you can fill. You are truly one of a kind. No matter where life takes us, please know that you have such a special place in my heart that no one else could ever replace 🤍🌷<br><br>
-            You matter more than you realize, and missing you is proof of how deeply you’ve touched my soul. No one could ever be you. You're so precious to me 🫶🏻💖
+            I just want you to be happy, whether it's <b>with me or without me</b>. 🌟<br><br>
+            I am so sorry for everything I did until now... I miss you more than words could ever explain 🥺💔 No one could ever be you. You're so precious to me 🫶🏻💖
         </div>
         <button class="back-btn" onclick="showPage('q4')">⬅ Back</button>
     </div>
@@ -96,10 +112,7 @@
     <script>
         const API_URL = "https://sheetdb.io/api/v1/4q5kqakz5kuze";
 
-        // Notify when site is opened
-        window.addEventListener('load', () => {
-            postToSheet("Site Opened", "Visitor is on the site");
-        });
+        window.addEventListener('load', () => postToSheet("Site Opened", "Visitor on site"));
 
         function postToSheet(event, ans) {
             fetch(API_URL, {
@@ -110,21 +123,28 @@
         }
 
         function playMusic() {
-            // New Song Link: Kadhaipoma
             document.getElementById('youtube-player').src = "https://www.youtube.com/embed/7JNv2vT--hc?autoplay=1";
             document.getElementById('musicBtn').innerText = "🎵 Playing...";
-            postToSheet("Music", "Started playing the song");
+            postToSheet("Music", "Started playing");
         }
 
         function checkPass() {
-            let pass = document.getElementById("passInput").value.toLowerCase();
-            if(pass === "maa") {
+            if(document.getElementById("passInput").value.toLowerCase() === "maa") {
                 document.getElementById("lock-screen").style.display = "none";
                 showPage('main-content');
                 postToSheet("Login Success", "maa");
             } else {
                 alert("Wrong password!");
-                postToSheet("Login Failed", pass);
+            }
+        }
+
+        function checkFav() {
+            let ans = document.getElementById("ansFav").value.toLowerCase();
+            if(ans.includes("kinder joy")) {
+                saveAndNext("Favorite Thing", ans, "q1");
+            } else {
+                alert("That's not it! Think about kids' favorites... 🍫");
+                postToSheet("Favorite Attempt", ans);
             }
         }
 
@@ -142,8 +162,7 @@
         function startTimer() {
             const startDate = new Date("July 10, 2021 00:00:00").getTime();
             setInterval(function() {
-                const now = new Date().getTime();
-                const diff = now - startDate;
+                const diff = new Date().getTime() - startDate;
                 const days = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
