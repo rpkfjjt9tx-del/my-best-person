@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Best Ever Person 💙</title>
     <style>
-        :root { --blue: #0077b6; --light: #e0f2f1; --dark: #01579b; --soft-blue: #ade8f4; }
+        :root { --blue: #0077b6; --light: #e0f2f1; --dark: #01579b; }
         
         body { 
             margin: 0; 
@@ -13,42 +13,46 @@
             color: var(--dark); 
             text-align: center; 
             min-height: 100vh; 
-            overflow-x: hidden;
             background: linear-gradient(180deg, #ff9e2c 0%, #feb47b 20%, #86d9f8 60%, #0077b6 100%);
             background-attachment: fixed;
         }
 
-        /* Artistic Background Elements */
         .bg-decor { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; pointer-events: none; }
-        .floating-heart { position: absolute; color: rgba(0, 119, 182, 0.2); font-size: 100px; animation: float 8s infinite ease-in-out; }
-        @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-30px) rotate(15deg); } }
+        .floating-heart { position: absolute; color: rgba(0, 119, 182, 0.2); font-size: 80px; animation: float 8s infinite ease-in-out; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
 
-        /* Lock Screen */
         #lock-screen { position: fixed; inset: 0; background: linear-gradient(135deg, #00b4d8, #03045e); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; }
         input.pass { padding: 15px; border-radius: 25px; border: 2px solid white; margin: 15px; width: 220px; text-align: center; font-size: 18px; background: rgba(255,255,255,0.2); color: white; }
-        
-        /* Glassmorphism Design */
-        .content-section { display: none; padding: 30px 20px; animation: fadeIn 1.2s; position: relative; z-index: 10; }
-        .page { display: none; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; }
-        .card { background: rgba(255, 255, 255, 0.85); padding: 30px; border-radius: 30px; max-width: 550px; margin: 20px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 2px solid rgba(255,255,255,0.5); }
 
-        .timer { font-size: 24px; font-weight: bold; color: var(--blue); margin: 15px 0; }
-        button { background: var(--blue); color: white; padding: 14px 35px; border: none; border-radius: 40px; font-weight: bold; cursor: pointer; margin: 10px; transition: 0.3s; }
-        button:hover { background: var(--dark); transform: scale(1.05); }
-        .back-btn { background: #90a4ae; font-size: 12px; margin-top: 20px; }
-        
-        textarea { width: 90%; height: 100px; padding: 15px; border-radius: 15px; border: 1px solid var(--blue); margin: 15px 0; font-family: inherit; font-size: 16px; background: white; }
+        .content-section { display: none; padding: 20px; animation: fadeIn 1s; }
+        .page { display: none; flex-direction: column; align-items: center; justify-content: center; min-height: 90vh; }
+        .card { 
+            background: rgba(255, 255, 255, 0.92); 
+            padding: 25px; 
+            border-radius: 25px; 
+            max-width: 500px; 
+            margin: 10px auto; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            max-height: 85vh; 
+            overflow-y: auto; 
+        }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .timer { font-size: 22px; font-weight: bold; color: var(--blue); margin: 10px 0; }
+        button { background: var(--blue); color: white; padding: 12px 30px; border: none; border-radius: 35px; font-weight: bold; cursor: pointer; margin: 10px; transition: 0.3s; }
+        button:hover { background: var(--dark); transform: scale(1.03); }
+        .back-btn { background: #90a4ae; font-size: 12px; }
+        
+        textarea { width: 90%; height: 80px; padding: 12px; border-radius: 12px; border: 1.5px solid var(--blue); margin: 10px 0; font-family: inherit; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body onload="startTimer()">
 
     <div class="bg-decor">
         <div class="floating-heart" style="top: 10%; left: 5%;">💙</div>
-        <div class="floating-heart" style="top: 50%; right: 5%;">💙</div>
-        <div class="floating-heart" style="bottom: 10%; left: 15%;">🌸</div>
-        <div class="floating-heart" style="bottom: 20%; right: 20%;">💐</div>
+        <div class="floating-heart" style="bottom: 15%; right: 8%;">💙</div>
+        <div class="floating-heart" style="top: 40%; right: 5%;">🌸</div>
     </div>
 
     <iframe id="youtube-player" width="0" height="0" src="" frameborder="0" allow="autoplay" style="display:none;"></iframe>
@@ -57,19 +61,18 @@
         <h1>Hi My Best Ever Person... 💙</h1>
         <p>👦 & 👧</p>
         <p>Password: 3 Letters you call me</p>
-        <input type="text" id="passInput" class="pass" maxlength="3" placeholder="Enter here...">
+        <input type="text" id="passInput" class="pass" maxlength="3" placeholder="???">
         <button onclick="checkPass()">Unlock Heart 🔓</button>
     </div>
 
     <div id="main-content" class="content-section">
         <div class="card">
             <h1>Our Journey 🌊🌅</h1>
-            <p>👦 ↔ 👧</p>
             <div class="timer" id="countdown">Calculating...</div>
-            <p>I've known you since <b>July 10, 2021</b></p>
+            <p>Known since <b>July 10, 2021</b></p>
             <button onclick="playMusic()" id="musicBtn">🎵 Play Our Song</button>
             <br>
-            <button onclick="showPage('q_fav')">Let's Begin ➡️</button>
+            <button onclick="showPage('q_fav')">Next ➡️</button>
         </div>
     </div>
 
@@ -77,17 +80,130 @@
         <div class="card">
             <h2>What is my favourite thing? 🎁</h2>
             <p><i>Hint: Kids love this!</i></p>
-            <input type="text" id="ansFav" placeholder="Type answer..." style="padding:10px; border-radius:10px; border:1px solid #ccc;">
+            <input type="text" id="ansFav" placeholder="Type here..." style="padding:10px; border-radius:10px;">
             <button onclick="checkFav()">Check</button>
             <button class="back-btn" onclick="showPage('main-content')">⬅ Back</button>
         </div>
     </div>
 
-    <div id="q1" class="page content-section">
+    <div id="q_hurt" class="page content-section">
         <div class="card">
-            <h2>Do you love me? ❤️</h2>
-            <button onclick="saveAndNext('Do you love me?', 'Yes', 'q2')">Yes</button>
-            <button onclick="saveAndNext('Do you love me?', 'No', 'q2')">No</button>
+            <h2>Did I ever hurt you? 🥺</h2>
+            <button onclick="saveAndNext('Did I hurt you?', 'Yes', 'q_sake')">Yes</button>
+            <button onclick="saveAndNext('Did I hurt you?', 'No', 'q_sake')">No</button>
             <button class="back-btn" onclick="showPage('q_fav')">⬅ Back</button>
         </div>
     </div>
+
+    <div id="q_sake" class="page content-section">
+        <div class="card">
+            <h2>Is it okay if I leave for your sake? 💔</h2>
+            <button onclick="saveAndNext('Is it okay if I leave?', 'Yes', 'q_love')">Yes</button>
+            <button onclick="saveAndNext('Is it okay if I leave?', 'No', 'q_love')">No</button>
+            <button class="back-btn" onclick="showPage('q_hurt')">⬅ Back</button>
+        </div>
+    </div>
+
+    <div id="q_love" class="page content-section">
+        <div class="card">
+            <h2>Do you love me? ❤️</h2>
+            <button onclick="saveAndNext('Do you love me?', 'Yes', 'final')">Yes</button>
+            <button onclick="saveAndNext('Do you love me?', 'No', 'final')">No</button>
+            <button class="back-btn" onclick="showPage('q_sake')">⬅ Back</button>
+        </div>
+    </div>
+
+    <div id="final" class="page content-section">
+        <div class="card" style="text-align: justify;">
+            <h2 style="text-align: center;">My Letter To You ✉️</h2>
+            <p>
+                I miss you more than words could ever explain 🥺💔 Every single day, there’s this quiet space in my heart that only you can fill. 
+                I’ve never met anyone like you before — your kindness, your smile, your way of understanding me without even needing explanations… 
+                it’s something so rare and so beautiful 🌸✨<br><br>
+                
+                You are truly one of a kind. No matter where life takes us, please know that you have such a special place in my heart 
+                that no one else could ever replace 🤍🌷 The memories we share mean everything to me, and I hold them so close 
+                because they remind me how lucky I am to have known someone as incredible as you.<br><br>
+                
+                I just want you to know that you matter to me more than you realize, and missing you is just proof of how deeply 
+                you’ve touched my soul 💫❤️ No one could ever be you, and that’s exactly why you’re so precious to me 🫶🏻💖<br><br>
+
+                <b>I want you to be happy with me or without me. I just want to see you happy. I'm sorry for everything.</b>
+            </p>
+            
+            <div style="text-align: center; border-top: 2px solid var(--blue); padding-top: 20px; margin-top: 20px;">
+                <h3 style="color: var(--blue);">The Last Thing... 💬</h3>
+                <p>What do you want me to say to you?</p>
+                <textarea id="ansSay" placeholder="Type your reply here..."></textarea>
+                <button onclick="saveFinal()">Send Reply 💙</button>
+            </div>
+            
+            <button class="back-btn" onclick="showPage('q_love')" style="width: 100%;">⬅ Back</button>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "https://sheetdb.io/api/v1/4q5kqakz5kuze";
+
+        window.addEventListener('load', () => postToSheet("Site Opened", "Visitor on site"));
+
+        function postToSheet(event, ans) {
+            fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ data: [{ 'Time': new Date().toLocaleString(), 'Event': event, 'Answer': ans }] })
+            });
+        }
+
+        function playMusic() {
+            document.getElementById('youtube-player').src = "https://www.youtube.com/embed/7JNv2vT--hc?autoplay=1";
+            document.getElementById('musicBtn').innerText = "🎵 Playing Our Song...";
+            postToSheet("Music", "Play Button Clicked");
+        }
+
+        function checkPass() {
+            if(document.getElementById("passInput").value.toLowerCase() === "maa") {
+                document.getElementById("lock-screen").style.display = "none";
+                showPage('main-content');
+                postToSheet("Login Success", "maa");
+            } else { alert("Wrong password!"); }
+        }
+
+        function checkFav() {
+            let ans = document.getElementById("ansFav").value.toLowerCase();
+            if(ans.includes("kinder joy")) {
+                saveAndNext("Favorite Thing", ans, "q_hurt");
+            } else { alert("Hint: Kids love the toy inside! 🍫"); }
+        }
+
+        function showPage(id) {
+            document.querySelectorAll('.content-section').forEach(p => p.style.display = 'none');
+            const target = document.getElementById(id);
+            target.style.display = (id === 'main-content') ? 'block' : 'flex';
+        }
+
+        function saveAndNext(question, answer, nextId) {
+            postToSheet(question, answer);
+            showPage(nextId);
+        }
+
+        function saveFinal() {
+            let reply = document.getElementById('ansSay').value;
+            postToSheet("Final Reply", reply);
+            alert("Your message has been sent. 💙");
+        }
+
+        function startTimer() {
+            const startDate = new Date("July 10, 2021 00:00:00").getTime();
+            setInterval(function() {
+                const diff = new Date().getTime() - startDate;
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+                document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + mins + "m " + secs + "s";
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
