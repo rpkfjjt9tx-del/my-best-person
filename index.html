@@ -18,31 +18,32 @@
         }
 
         .bg-decor { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; pointer-events: none; }
-        .floating-heart { position: absolute; color: rgba(0, 119, 182, 0.2); font-size: 80px; animation: float 8s infinite ease-in-out; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .floating-heart { position: absolute; color: rgba(0, 119, 182, 0.2); font-size: 100px; animation: float 8s infinite ease-in-out; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
 
         #lock-screen { position: fixed; inset: 0; background: linear-gradient(135deg, #00b4d8, #03045e); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; }
-        input.pass { padding: 15px; border-radius: 25px; border: 2px solid white; margin: 15px; width: 220px; text-align: center; font-size: 18px; background: rgba(255,255,255,0.2); color: white; }
+        input.pass { padding: 15px; border-radius: 25px; border: 2px solid white; margin: 15px; width: 220px; text-align: center; font-size: 18px; background: rgba(255,255,255,0.2); color: white; outline: none; }
 
         .content-section { display: none; padding: 20px; animation: fadeIn 1s; }
         .page { display: none; flex-direction: column; align-items: center; justify-content: center; min-height: 90vh; }
         .card { 
-            background: rgba(255, 255, 255, 0.92); 
+            background: rgba(255, 255, 255, 0.93); 
             padding: 25px; 
             border-radius: 25px; 
             max-width: 500px; 
             margin: 10px auto; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            max-height: 85vh; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-height: 80vh; 
             overflow-y: auto; 
+            border: 1px solid rgba(255,255,255,0.5);
         }
 
-        .timer { font-size: 22px; font-weight: bold; color: var(--blue); margin: 10px 0; }
-        button { background: var(--blue); color: white; padding: 12px 30px; border: none; border-radius: 35px; font-weight: bold; cursor: pointer; margin: 10px; transition: 0.3s; }
-        button:hover { background: var(--dark); transform: scale(1.03); }
-        .back-btn { background: #90a4ae; font-size: 12px; }
+        .timer { font-size: 24px; font-weight: bold; color: var(--blue); margin: 15px 0; }
+        button { background: var(--blue); color: white; padding: 14px 35px; border: none; border-radius: 40px; font-weight: bold; cursor: pointer; margin: 10px; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        button:hover { background: var(--dark); transform: scale(1.05); }
+        .back-btn { background: #90a4ae; font-size: 12px; margin-top: 10px; }
         
-        textarea { width: 90%; height: 80px; padding: 12px; border-radius: 12px; border: 1.5px solid var(--blue); margin: 10px 0; font-family: inherit; }
+        textarea { width: 90%; height: 90px; padding: 12px; border-radius: 12px; border: 1.5px solid var(--blue); margin: 10px 0; font-family: inherit; font-size: 16px; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
@@ -51,11 +52,13 @@
 
     <div class="bg-decor">
         <div class="floating-heart" style="top: 10%; left: 5%;">💙</div>
-        <div class="floating-heart" style="bottom: 15%; right: 8%;">💙</div>
+        <div class="floating-heart" style="bottom: 15%; right: 10%;">💙</div>
         <div class="floating-heart" style="top: 40%; right: 5%;">🌸</div>
     </div>
 
-    <iframe id="youtube-player" width="0" height="0" src="" frameborder="0" allow="autoplay" style="display:none;"></iframe>
+    <div id="player-container" style="display:none;">
+        <iframe id="youtube-player" width="0" height="0" src="" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+    </div>
 
     <div id="lock-screen">
         <h1>Hi My Best Ever Person... 💙</h1>
@@ -69,7 +72,7 @@
         <div class="card">
             <h1>Our Journey 🌊🌅</h1>
             <div class="timer" id="countdown">Calculating...</div>
-            <p>Known since <b>July 10, 2021</b></p>
+            <p>I've known you since <b>July 10, 2021</b></p>
             <button onclick="playMusic()" id="musicBtn">🎵 Play Our Song</button>
             <br>
             <button onclick="showPage('q_fav')">Next ➡️</button>
@@ -80,7 +83,8 @@
         <div class="card">
             <h2>What is my favourite thing? 🎁</h2>
             <p><i>Hint: Kids love this!</i></p>
-            <input type="text" id="ansFav" placeholder="Type here..." style="padding:10px; border-radius:10px;">
+            <input type="text" id="ansFav" placeholder="Type answer..." style="padding:12px; border-radius:10px; border:1px solid #ccc; width: 80%;">
+            <br>
             <button onclick="checkFav()">Check</button>
             <button class="back-btn" onclick="showPage('main-content')">⬅ Back</button>
         </div>
@@ -89,8 +93,10 @@
     <div id="q_hurt" class="page content-section">
         <div class="card">
             <h2>Did I ever hurt you? 🥺</h2>
-            <button onclick="saveAndNext('Did I hurt you?', 'Yes', 'q_sake')">Yes</button>
-            <button onclick="saveAndNext('Did I hurt you?', 'No', 'q_sake')">No</button>
+            <div style="display:flex; justify-content:center; gap: 10px;">
+                <button onclick="saveAndNext('Did I hurt you?', 'Yes', 'q_sake')">Yes</button>
+                <button onclick="saveAndNext('Did I hurt you?', 'No', 'q_sake')">No</button>
+            </div>
             <button class="back-btn" onclick="showPage('q_fav')">⬅ Back</button>
         </div>
     </div>
@@ -98,8 +104,10 @@
     <div id="q_sake" class="page content-section">
         <div class="card">
             <h2>Is it okay if I leave for your sake? 💔</h2>
-            <button onclick="saveAndNext('Is it okay if I leave?', 'Yes', 'q_love')">Yes</button>
-            <button onclick="saveAndNext('Is it okay if I leave?', 'No', 'q_love')">No</button>
+            <div style="display:flex; justify-content:center; gap: 10px;">
+                <button onclick="saveAndNext('Leave for sake?', 'Yes', 'q_love')">Yes</button>
+                <button onclick="saveAndNext('Leave for sake?', 'No', 'q_love')">No</button>
+            </div>
             <button class="back-btn" onclick="showPage('q_hurt')">⬅ Back</button>
         </div>
     </div>
@@ -107,8 +115,10 @@
     <div id="q_love" class="page content-section">
         <div class="card">
             <h2>Do you love me? ❤️</h2>
-            <button onclick="saveAndNext('Do you love me?', 'Yes', 'final')">Yes</button>
-            <button onclick="saveAndNext('Do you love me?', 'No', 'final')">No</button>
+            <div style="display:flex; justify-content:center; gap: 10px;">
+                <button onclick="saveAndNext('Do you love me?', 'Yes', 'final')">Yes</button>
+                <button onclick="saveAndNext('Do you love me?', 'No', 'final')">No</button>
+            </div>
             <button class="back-btn" onclick="showPage('q_sake')">⬅ Back</button>
         </div>
     </div>
@@ -134,7 +144,8 @@
             <div style="text-align: center; border-top: 2px solid var(--blue); padding-top: 20px; margin-top: 20px;">
                 <h3 style="color: var(--blue);">The Last Thing... 💬</h3>
                 <p>What do you want me to say to you?</p>
-                <textarea id="ansSay" placeholder="Type your reply here..."></textarea>
+                <textarea id="ansSay" placeholder="Your reply to me..."></textarea>
+                <br>
                 <button onclick="saveFinal()">Send Reply 💙</button>
             </div>
             
@@ -156,30 +167,38 @@
         }
 
         function playMusic() {
-            document.getElementById('youtube-player').src = "https://www.youtube.com/embed/7JNv2vT--hc?autoplay=1";
-            document.getElementById('musicBtn').innerText = "🎵 Playing Our Song...";
-            postToSheet("Music", "Play Button Clicked");
+            // Updated link with explicit autoplay and mute=0
+            const videoId = "7JNv2vT--hc";
+            const player = document.getElementById('youtube-player');
+            player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&rel=0`;
+            
+            document.getElementById('musicBtn').innerText = "🎵 Playing Kadhaipoma...";
+            postToSheet("Music", "Play button clicked");
         }
 
         function checkPass() {
-            if(document.getElementById("passInput").value.toLowerCase() === "maa") {
+            const pass = document.getElementById("passInput").value.toLowerCase();
+            if(pass === "maa") {
                 document.getElementById("lock-screen").style.display = "none";
                 showPage('main-content');
-                postToSheet("Login Success", "maa");
-            } else { alert("Wrong password!"); }
+                postToSheet("Login", "Success");
+            } else { alert("Wrong password! 🥺"); }
         }
 
         function checkFav() {
             let ans = document.getElementById("ansFav").value.toLowerCase();
             if(ans.includes("kinder joy")) {
                 saveAndNext("Favorite Thing", ans, "q_hurt");
-            } else { alert("Hint: Kids love the toy inside! 🍫"); }
+            } else { alert("Hint: 🍫 Kids love the toy inside!"); }
         }
 
         function showPage(id) {
             document.querySelectorAll('.content-section').forEach(p => p.style.display = 'none');
             const target = document.getElementById(id);
-            target.style.display = (id === 'main-content') ? 'block' : 'flex';
+            if (target) {
+                target.style.display = (id === 'main-content') ? 'block' : 'flex';
+                target.scrollTop = 0; // Reset scroll position
+            }
         }
 
         function saveAndNext(question, answer, nextId) {
@@ -189,8 +208,9 @@
 
         function saveFinal() {
             let reply = document.getElementById('ansSay').value;
+            if(!reply.trim()) { alert("Please type something... 🥺"); return; }
             postToSheet("Final Reply", reply);
-            alert("Your message has been sent. 💙");
+            alert("Sent successfully! 💙");
         }
 
         function startTimer() {
