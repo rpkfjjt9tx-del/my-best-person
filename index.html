@@ -6,39 +6,69 @@
     <title>For My Best Ever Person 💙</title>
     <style>
         :root { --blue: #0077b6; --light: #caf0f8; --dark: #03045e; --mid: #00b4d8; }
-        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--light); color: var(--dark); text-align: center; min-height: 100vh; overflow-x: hidden; }
         
-        /* Floating Decorations */
-        .decor { position: fixed; font-size: 20px; z-index: -1; animation: float 6s infinite ease-in-out; opacity: 0.6; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        body { 
+            margin: 0; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            color: var(--dark); 
+            text-align: center; 
+            min-height: 100vh; 
+            overflow-x: hidden;
+            /* Beach Sunset Background */
+            background: linear-gradient(to bottom, #ff9e2c 0%, #ff6b6b 30%, #4facfe 70%, #00f2fe 100%);
+            background-attachment: fixed;
+        }
+
+        /* Large Floating Blue Hearts Background */
+        .heart-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .big-heart {
+            position: absolute;
+            color: rgba(0, 119, 182, 0.3);
+            font-size: 150px;
+            animation: floatHeart 10s infinite ease-in-out;
+        }
+
+        @keyframes floatHeart {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.2; }
+            50% { transform: translateY(-50px) rotate(20deg); opacity: 0.5; }
+            100% { transform: translateY(0) rotate(0deg); opacity: 0.2; }
+        }
 
         /* Lock Screen */
         #lock-screen { position: fixed; inset: 0; background: linear-gradient(135deg, var(--mid), var(--dark)); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; }
         input { padding: 15px; border-radius: 25px; border: none; margin: 15px; width: 220px; text-align: center; font-size: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         
         /* Sections */
-        .content-section { display: none; padding: 30px 20px; animation: fadeIn 1s; }
+        .content-section { display: none; padding: 30px 20px; animation: fadeIn 1s; position: relative; z-index: 10; }
         .page { display: none; flex-direction: column; align-items: center; justify-content: center; min-height: 75vh; }
         
         /* Elements */
-        .timer { font-size: 22px; font-weight: bold; background: white; padding: 20px; border-radius: 20px; margin: 20px auto; max-width: 400px; color: var(--blue); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-        .message-box { font-size: 16px; line-height: 1.8; max-width: 500px; background: white; padding: 25px; border-radius: 25px; text-align: center; margin: 20px auto; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .timer { font-size: 22px; font-weight: bold; background: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 20px; margin: 20px auto; max-width: 400px; color: var(--blue); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .message-box { font-size: 16px; line-height: 1.8; max-width: 500px; background: rgba(255, 255, 255, 0.9); padding: 25px; border-radius: 25px; text-align: center; margin: 20px auto; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         button { background: var(--blue); color: white; padding: 12px 30px; border: none; border-radius: 30px; font-weight: bold; cursor: pointer; margin: 10px; transition: 0.3s; }
         button:hover { background: var(--dark); transform: scale(1.05); }
         .back-btn { background: #6c757d; font-size: 12px; margin-top: 20px; }
         
-        textarea { width: 85%; max-width: 400px; height: 100px; padding: 15px; border-radius: 15px; border: 2px solid var(--blue); margin: 15px 0; font-family: inherit; }
+        textarea { width: 85%; max-width: 400px; height: 100px; padding: 15px; border-radius: 15px; border: 2px solid var(--blue); margin: 15px 0; font-family: inherit; background: rgba(255,255,255,0.8); }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body onload="startTimer()">
 
-    <div class="decor" style="top:10%; left:10%;">❤️</div>
-    <div class="decor" style="top:20%; right:15%;">🌸</div>
-    <div class="decor" style="bottom:15%; left:20%;">👫</div>
-    <div class="decor" style="bottom:10%; right:10%;">💐</div>
-    <div class="decor" style="top:50%; left:5%;">💙</div>
+    <div class="heart-bg">
+        <div class="big-heart" style="top: 10%; left: 5%;">💙</div>
+        <div class="big-heart" style="top: 60%; right: 10%;">💙</div>
+        <div class="big-heart" style="bottom: 5%; left: 15%;">💙</div>
+    </div>
 
     <div id="music-container" style="display:none; position: fixed; bottom: 20px; right: 20px; z-index: 2000;">
         <iframe id="youtube-player" width="0" height="0" src="" frameborder="0" allow="autoplay"></iframe>
@@ -46,27 +76,30 @@
 
     <div id="lock-screen">
         <h1>Hi My Best Ever Person... 💙</h1>
+        <p>👦 & 👧</p>
         <p>Password: 3 Letters you call me</p>
         <input type="text" id="passInput" maxlength="3" placeholder="???">
         <button onclick="checkPass()">Unlock</button>
     </div>
 
     <div id="main-content" class="content-section">
-        <h1>Our Journey 🌟</h1>
+        <h1>Our Journey 🌊🌅</h1>
+        <p>👦 ↔ 👧</p>
         <div class="timer" id="countdown">Calculating...</div>
-        <p>Known you since <b>July 10, 2021</b> 👫</p>
+        <p>Since <b>July 10, 2021</b> 🌸</p>
         
         <div style="margin: 30px 0;">
-            <p>Listen to this while you're here...</p>
-            <button onclick="playMusic()" id="musicBtn">🎵 Play Music</button>
+            <p>Listen to this while you're here... 🎵</p>
+            <button onclick="playMusic()" id="musicBtn">Play "Kadhaipoma" 🎶</button>
         </div>
         <button onclick="showPage('q_fav')">Next ➡️</button>
     </div>
 
     <div id="q_fav" class="page content-section">
         <h2>What is my favourite thing? 🎁</h2>
+        <p>👦 ❓ 👧</p>
         <p><i>Hint: Kids love this!</i></p>
-        <input type="text" id="ansFav" placeholder="Enter your answer...">
+        <input type="text" id="ansFav" placeholder="Enter answer...">
         <button onclick="checkFav()">Submit</button>
         <button class="back-btn" onclick="showPage('main-content')">⬅ Back</button>
     </div>
@@ -103,6 +136,7 @@
 
     <div id="final" class="page content-section">
         <div class="message-box">
+            <p>👦 ✨ 👧</p>
             I just want you to be happy, whether it's <b>with me or without me</b>. 🌟<br><br>
             I am so sorry for everything I did until now... I miss you more than words could ever explain 🥺💔 No one could ever be you. You're so precious to me 🫶🏻💖
         </div>
@@ -124,52 +158,4 @@
 
         function playMusic() {
             document.getElementById('youtube-player').src = "https://www.youtube.com/embed/7JNv2vT--hc?autoplay=1";
-            document.getElementById('musicBtn').innerText = "🎵 Playing...";
-            postToSheet("Music", "Started playing");
-        }
-
-        function checkPass() {
-            if(document.getElementById("passInput").value.toLowerCase() === "maa") {
-                document.getElementById("lock-screen").style.display = "none";
-                showPage('main-content');
-                postToSheet("Login Success", "maa");
-            } else {
-                alert("Wrong password!");
-            }
-        }
-
-        function checkFav() {
-            let ans = document.getElementById("ansFav").value.toLowerCase();
-            if(ans.includes("kinder joy")) {
-                saveAndNext("Favorite Thing", ans, "q1");
-            } else {
-                alert("That's not it! Think about kids' favorites... 🍫");
-                postToSheet("Favorite Attempt", ans);
-            }
-        }
-
-        function showPage(id) {
-            document.querySelectorAll('.content-section').forEach(p => p.style.display = 'none');
-            const target = document.getElementById(id);
-            target.style.display = (id === 'main-content') ? 'block' : 'flex';
-        }
-
-        function saveAndNext(question, answer, nextId) {
-            postToSheet(question, answer);
-            showPage(nextId);
-        }
-
-        function startTimer() {
-            const startDate = new Date("July 10, 2021 00:00:00").getTime();
-            setInterval(function() {
-                const diff = new Date().getTime() - startDate;
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const secs = Math.floor((diff % (1000 * 60)) / 1000);
-                document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + mins + "m " + secs + "s";
-            }, 1000);
-        }
-    </script>
-</body>
-</html>
+            document.getElementById('musicBtn').innerText = "
