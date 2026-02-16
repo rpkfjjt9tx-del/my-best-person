@@ -1,133 +1,142 @@
 <!DOCTYPE html>
-<html lang="ta">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Best Ever Person 💙</title>
     <style>
         :root { --blue: #0077b6; --light: #caf0f8; --dark: #03045e; --mid: #00b4d8; }
-        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--light); color: var(--dark); text-align: center; min-height: 100vh; overflow-x: hidden; }
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--light); color: var(--dark); text-align: center; min-height: 100vh; }
         
         /* Lock Screen */
-        #lock-screen { position: fixed; inset: 0; background: linear-gradient(135deg, var(--mid), var(--dark)); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; transition: 0.5s; }
-        input { padding: 15px; border-radius: 25px; border: none; margin: 15px; width: 200px; text-align: center; font-size: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        #lock-screen { position: fixed; inset: 0; background: linear-gradient(135deg, var(--mid), var(--dark)); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; }
+        input { padding: 15px; border-radius: 25px; border: none; margin: 15px; width: 220px; text-align: center; font-size: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         
-        /* Pages */
+        /* Sections */
         .content-section { display: none; padding: 30px 20px; animation: fadeIn 1s; }
-        .page { display: none; flex-direction: column; align-items: center; justify-content: center; min-height: 70vh; padding: 20px; }
+        .page { display: none; flex-direction: column; align-items: center; justify-content: center; min-height: 75vh; }
         
         /* Elements */
         .timer { font-size: 22px; font-weight: bold; background: white; padding: 20px; border-radius: 20px; margin: 20px auto; max-width: 400px; color: var(--blue); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-        .message-box { font-size: 16px; line-height: 1.8; max-width: 500px; background: white; padding: 25px; border-radius: 25px; border-left: 5px solid var(--blue); text-align: justify; margin: 20px auto; }
-        button { background: var(--blue); color: white; padding: 12px 30px; border: none; border-radius: 30px; font-weight: bold; cursor: pointer; margin: 10px; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,119,182,0.3); }
-        button:hover { background: var(--dark); transform: translateY(-3px); }
-        .back-btn { background: #6c757d; font-size: 12px; margin-top: 30px; }
+        .message-box { font-size: 16px; line-height: 1.8; max-width: 500px; background: white; padding: 25px; border-radius: 25px; text-align: center; margin: 20px auto; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        button { background: var(--blue); color: white; padding: 12px 30px; border: none; border-radius: 30px; font-weight: bold; cursor: pointer; margin: 10px; transition: 0.3s; }
+        button:hover { background: var(--dark); transform: scale(1.05); }
+        .back-btn { background: #6c757d; font-size: 12px; margin-top: 20px; }
         
-        textarea { width: 80%; max-width: 400px; height: 100px; padding: 15px; border-radius: 15px; border: 2px solid var(--blue); margin: 15px 0; font-family: inherit; }
+        textarea { width: 85%; max-width: 400px; height: 100px; padding: 15px; border-radius: 15px; border: 2px solid var(--blue); margin: 15px 0; font-family: inherit; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body onload="startTimer()">
 
-    <div style="position: fixed; top: 10px; right: 10px; z-index: 2000;">
-        <p style="font-size: 10px; margin: 0;">Play Music 🎵</p>
-        <iframe width="0" height="0" src="https://www.youtube.com/embed/xodI4m1yGbY?autoplay=1&loop=1" frameborder="0" allow="autoplay"></iframe>
-        <button onclick="alert('பாடலை ரசித்துக் கொண்டே படிக்கவும்! 💙')" style="padding: 5px 10px; font-size: 12px;">Music On</button>
+    <div id="music-container" style="display:none; position: fixed; bottom: 20px; right: 20px; z-index: 2000;">
+        <iframe id="youtube-player" width="0" height="0" src="" frameborder="0" allow="autoplay"></iframe>
     </div>
 
     <div id="lock-screen">
         <h1>Hi My Best Ever Person... 💙</h1>
-        <p>Password (3 Letters):</p>
+        <p>Password: 3 Letters you call me</p>
         <input type="text" id="passInput" maxlength="3" placeholder="???">
         <button onclick="checkPass()">Unlock</button>
     </div>
 
     <div id="main-content" class="content-section">
         <h1>Our Journey 🌟</h1>
-        <div class="timer" id="countdown">Calculating...</div>
-        <p>We’ve known each other since <b>July 10, 2021</b>. <br> Every second counts with you.</p>
-        <button onclick="showPage('q1')">Start ➡️</button>
+        <div class="timer" id="countdown">Calculating our time...</div>
+        <p>I've known you since <b>July 10, 2021</b>.</p>
+        
+        <div style="margin: 30px 0;">
+            <p>Listen to this while you're here...</p>
+            <button onclick="playMusic()" id="musicBtn">🎵 Play Music</button>
+        </div>
+
+        <button onclick="showPage('q1')">Next ➡️</button>
     </div>
 
     <div id="q1" class="page content-section">
         <h2>Do you love me? ❤️</h2>
         <div style="display:flex;">
-            <button onclick="saveAnswer('Do you love me?', 'Yes'); showPage('q2');">Yes</button>
-            <button onclick="saveAnswer('Do you love me?', 'No'); showPage('q2');">No</button>
+            <button onclick="saveAndNext('Do you love me?', 'Yes', 'q2')">Yes</button>
+            <button onclick="saveAndNext('Do you love me?', 'No', 'q2')">No</button>
         </div>
         <button class="back-btn" onclick="showPage('main-content')">⬅ Back</button>
     </div>
 
     <div id="q2" class="page content-section">
-        <h2>Did I hurt you? 🥺</h2>
-        <textarea id="ansHurt" placeholder="உண்மையைச் சொல்லுங்க..."></textarea>
-        <button onclick="saveAnswer('Did I hurt you?', document.getElementById('ansHurt').value); showPage('q3');">Next</button>
+        <h2>Did I ever hurt you? 🥺</h2>
+        <textarea id="ansHurt" placeholder="Be honest with me..."></textarea>
+        <button onclick="saveAndNext('Did I hurt you?', document.getElementById('ansHurt').value, 'q3')">Next</button>
         <button class="back-btn" onclick="showPage('q1')">⬅ Back</button>
     </div>
 
     <div id="q3" class="page content-section">
         <h2>Is it okay if I leave you for your sake? 💔</h2>
-        <textarea id="ansLeave" placeholder="உங்கள் பதில் என்ன?"></textarea>
-        <button onclick="saveAnswer('Is it okay if I leave?', document.getElementById('ansLeave').value); showPage('final');">Next</button>
+        <textarea id="ansLeave" placeholder="Tell me what you think..."></textarea>
+        <button onclick="saveAndNext('Is it okay if I leave?', document.getElementById('ansLeave').value, 'q4')">Next</button>
         <button class="back-btn" onclick="showPage('q2')">⬅ Back</button>
+    </div>
+
+    <div id="q4" class="page content-section">
+        <h2>What do you want me to say to you? 💬</h2>
+        <textarea id="ansSay" placeholder="Anything you want to hear..."></textarea>
+        <button onclick="saveAndNext('What do you want me to say?', document.getElementById('ansSay').value, 'final')">Next</button>
+        <button class="back-btn" onclick="showPage('q3')">⬅ Back</button>
     </div>
 
     <div id="final" class="page content-section">
         <div class="message-box">
-            <b>I am so sorry...</b> for everything I did until now. 😔<br><br>
             I just want you to be happy, whether it's <b>with me or without me</b>. My only wish is to see you happy always. 🌟<br><br>
-            I miss you more than words could ever explain... 🥺 Every single day, there’s this quiet space in my heart that only you can fill. I’ve never met anyone like you before. You are truly one of a kind. No matter where life takes us, please know that you have such a special place in my heart that no one else could ever replace. 🤍🌷<br><br>
-            You’re so precious to me 🫶🏻💖
+            I am so sorry for everything I did until now... I miss you more than words could ever explain 🥺💔 Every single day, there’s this quiet space in my heart that only you can fill. You are truly one of a kind. No matter where life takes us, please know that you have such a special place in my heart that no one else could ever replace 🤍🌷<br><br>
+            You matter more than you realize, and missing you is proof of how deeply you’ve touched my soul. No one could ever be you. You're so precious to me 🫶🏻💖
         </div>
-        <button class="back-btn" onclick="showPage('q3')">⬅ Back to Questions</button>
+        <button class="back-btn" onclick="showPage('q4')">⬅ Back</button>
     </div>
 
     <script>
         const API_URL = "https://sheetdb.io/api/v1/4q5kqakz5kuze";
 
-        // Notify every time he opens the site
+        // Notify when site is opened
         window.addEventListener('load', () => {
-            postData("Site Opened", "The person just opened your website.");
+            postToSheet("Site Opened", "Visitor is on the site");
         });
 
-        function postData(event, answer) {
+        function postToSheet(event, ans) {
             fetch(API_URL, {
-                method: "POST",
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    data: [{
-                        "Time": new Date().toLocaleString(),
-                        "Event": event,
-                        "Answer": answer
-                    }]
-                })
+                body: JSON.stringify({ data: [{ 'Time': new Date().toLocaleString(), 'Event': event, 'Answer': ans }] })
             });
+        }
+
+        function playMusic() {
+            // New Song Link: Kadhaipoma
+            document.getElementById('youtube-player').src = "https://www.youtube.com/embed/7JNv2vT--hc?autoplay=1";
+            document.getElementById('musicBtn').innerText = "🎵 Playing...";
+            postToSheet("Music", "Started playing the song");
         }
 
         function checkPass() {
             let pass = document.getElementById("passInput").value.toLowerCase();
             if(pass === "maa") {
-                document.getElementById("lock-screen").style.opacity = "0";
-                setTimeout(() => {
-                    document.getElementById("lock-screen").style.display = "none";
-                    showPage('main-content');
-                }, 500);
-                postData("Login Success", "Password entered correctly: maa");
+                document.getElementById("lock-screen").style.display = "none";
+                showPage('main-content');
+                postToSheet("Login Success", "maa");
             } else {
-                alert("தவறான பாஸ்வேர்ட்! (Hint: 3 letters)");
-                postData("Login Failed", "Tried with: " + pass);
+                alert("Wrong password!");
+                postToSheet("Login Failed", pass);
             }
         }
 
         function showPage(id) {
-            document.querySelectorAll('.content-section').forEach(section => section.style.display = 'none');
+            document.querySelectorAll('.content-section').forEach(p => p.style.display = 'none');
             const target = document.getElementById(id);
-            target.style.display = id === 'main-content' ? 'block' : 'flex';
+            target.style.display = (id === 'main-content') ? 'block' : 'flex';
         }
 
-        function saveAnswer(question, ans) {
-            postData(question, ans);
+        function saveAndNext(question, answer, nextId) {
+            postToSheet(question, answer);
+            showPage(nextId);
         }
 
         function startTimer() {
